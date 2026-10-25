@@ -215,3 +215,76 @@ Recommended order:
 5. Unit testing with `pytest`.
 6. GitHub Actions for automated tests and continuous integration.
 7. Docker and deployment once I am comfortable with the basics.
+
+
+========================================================================
+GIT WORKFLOW: HOW TO EXPERIMENT CODE IN A NEW BRANCH
+========================================================================
+
+STEP 1: PREPARE YOUR WORKSPACE
+------------------------------------------------------------------------
+Before creating a new branch, make sure your current work is saved or hidden.
+
+* Option A (Commit): Save your current progress to your existing branch.
+* Option B (Stash): If your current work is half-done and you don't want
+  to commit it yet, hide it temporarily by running:
+  
+  git stash
+
+
+STEP 2: CREATE AND SWITCH TO YOUR EXPERIMENTAL BRANCH
+------------------------------------------------------------------------
+Run this command to create your new branch and immediately switch into it:
+
+git checkout -b your-experimental-branch-name
+
+(Alternatively, in newer Git versions, you can use: git switch -c name)
+
+
+STEP 3: WRITE AND TEST YOUR CODE
+------------------------------------------------------------------------
+Open your code editor and experiment freely. Your changes are now completely 
+isolated from your main project timeline.
+
+
+STEP 4: SAVE YOUR EXPERIMENTAL PROGRESS
+------------------------------------------------------------------------
+When you reach a good stopping point or complete your experiment, save your 
+changes to this specific branch:
+
+1. Stage all your modified files:
+   git add .
+
+2. Commit the changes with a descriptive message:
+   git commit -m "Added experimental features"
+
+
+STEP 5: DECIDE THE OUTCOME OF YOUR EXPERIMENT
+------------------------------------------------------------------------
+Choose one of the three paths below based on how your experiment went:
+
+Scenario 1: The experiment worked and you want to keep it.
+  1. Switch back to your main branch:
+     git checkout main
+  2. Merge the experimental changes into main:
+     git merge your-experimental-branch-name
+
+Scenario 2: The experiment failed and you want to delete it.
+  1. Switch back to your main branch:
+     git checkout main
+  2. Force delete the experimental branch:
+     git branch -D your-experimental-branch-name
+
+Scenario 3: You want to pause and come back to it later.
+  1. Simply switch back to your main branch without deleting anything:
+     git checkout main
+
+
+========================================================================
+QUICK COMMAND CHEATSHEET
+========================================================================
+* Create & jump to new branch:  git checkout -b <branch-name>
+* Check which branch you are on: git branch
+* Save branch changes:           git add .  &&  git commit -m "message"
+* Switch back to main branch:    git checkout main
+========================================================================
