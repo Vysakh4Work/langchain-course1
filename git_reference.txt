@@ -1,0 +1,217 @@
+# My Developer Reference: Python, uv, Git & GitHub
+
+## 1. Understand the tools
+
+| Tool | Purpose |
+|---|---|
+| Python | Programming language used to write my application |
+| VS Code | Editor where I write and debug code |
+| `uv` | Manages Python versions, dependencies, virtual environments, and project commands |
+| Git | Tracks code changes and saves version history |
+| GitHub | Hosts Git repositories online |
+| GitHub Copilot | AI coding assistant; its sign-in is not necessarily the same as Git's authentication |
+
+**Remember:** `uv` manages my Python environment, Git manages my code history, and GitHub stores my repository online.
+
+## 2. Important Git concepts
+
+- **Repository:** A project tracked by Git.
+- **Working directory:** The files I am currently editing.
+- **Staging:** Selecting changes for my next commit.
+- **Commit:** A named checkpoint in my project's history.
+- **Branch:** An independent line of development.
+- **Remote:** A reference to an online repository.
+- **Push:** Uploads my local commits to a remote.
+- **Pull:** Fetches and integrates remote changes into my local branch.
+- **Clone:** Downloads a repository to my computer.
+- **Merge:** Combines changes from different branches.
+
+## 3. My normal workflow
+
+Whenever I modify an existing project:
+
+### Step 1: Check what changed
+```bash
+git status
+```
+
+### Step 2: Review my changes
+```bash
+git diff
+```
+
+### Step 3: Stage changes
+```bash
+git add .
+```
+
+I should review the files carefully before staging everything. I can stage a specific file instead:
+
+```bash
+git add main.py
+```
+
+### Step 4: Review staged changes
+```bash
+git status
+git diff --cached
+```
+
+### Step 5: Save a checkpoint
+```bash
+git commit -m "Describe what changed"
+```
+
+Examples:
+```bash
+git commit -m "Add input validation"
+git commit -m "Fix API error handling"
+git commit -m "Update documentation"
+```
+
+### Step 6: Upload to GitHub
+```bash
+git push
+```
+
+For an already configured branch, this is normally sufficient.
+
+**My workflow to remember:**
+
+Edit → Review → Stage → Commit → Push.
+
+## 4. Essential commands
+
+| Command | Purpose |
+|---|---|
+| `git status` | Check current changes and branch |
+| `git log --oneline` | View recent commits |
+| `git diff` | See unstaged changes |
+| `git diff --cached` | See staged changes |
+| `git branch --show-current` | Find the current branch |
+| `git branch` | List local branches |
+| `git switch -c feature-name` | Create and switch to a new branch |
+| `git remote -v` | View configured remote URLs |
+| `git fetch` | Download remote information without integrating it |
+| `git pull` | Fetch and integrate remote changes |
+| `git push` | Upload commits |
+| `git restore main.py` | Discard unstaged changes to that file; use carefully |
+
+## 5. Starting a new Python project with uv
+
+A typical workflow is:
+
+```bash
+uv init my-project
+cd my-project
+uv add requests
+uv run main.py
+```
+
+The exact commands depend on whether the project is an application, library, or an existing project.
+
+Important files:
+
+- `pyproject.toml`: Project configuration and dependency declarations.
+- `uv.lock`: Locked dependency versions for reproducible installations.
+- `.venv/`: Local virtual environment.
+- `.python-version`: May specify the Python version for the project.
+
+For an existing `uv` project, preserve its current structure rather than initializing it again unnecessarily.
+
+## 6. What should I upload to GitHub?
+
+Generally, commit:
+
+- Python source files (`.py`)
+- `pyproject.toml`
+- `uv.lock`
+- Useful documentation (`README.md`)
+- Tests and appropriate configuration files
+
+Generally, do not commit:
+
+- `.venv/`
+- `__pycache__/`
+- `.env` files containing secrets
+- API keys, passwords, tokens, or private certificates
+- Generated files that can easily be recreated
+- Confidential company, customer, or vehicle data
+
+A basic `.gitignore`:
+
+```gitignore
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+```
+
+Check the project's needs before adding other ignore rules. Do not ignore useful project files indiscriminately.
+
+**Important:** Making a repository private does not replace good secret management. Never commit credentials in the first place.
+
+## 7. First-time GitHub setup
+
+For an existing local Git repository:
+
+1. Create an empty GitHub repository.
+2. Check `git status`.
+3. Check `git branch --show-current`.
+4. Add the correct GitHub remote if one is missing.
+5. Review and commit the desired files.
+6. Push the correct branch.
+
+Example:
+
+```bash
+git remote add origin https://github.com/USERNAME/REPOSITORY.git
+git push -u origin main
+```
+
+Only use `git remote add` if `origin` has not already been configured. If the branch has another name, use that branch instead of `main`.
+
+## 8. Understanding the GitHub 403 error I encountered
+
+My repository was owned by `Vysakh4Work`, but Git attempted to authenticate as `Fundeveloper4u`.
+
+The key lesson:
+
+**Signing in to GitHub Copilot in VS Code does not guarantee that Git pushes use the same account.**
+
+When this happens:
+
+1. Check `git remote -v`.
+2. Verify which account owns the repository and which account should have write access.
+3. Check the saved GitHub credentials in Windows Credential Manager.
+4. Remove only the relevant stale credential if necessary.
+5. Retry the push and authenticate with the correct account.
+
+A 403 can also mean the authenticated account genuinely lacks permission, so authentication is not the only possible cause.
+
+## 9. Rules to follow
+
+1. Run `git status` before making important Git changes.
+2. Read commands before running them.
+3. Review staged files before committing.
+4. Never upload API keys or confidential data.
+5. Commit at useful checkpoints, not only at the end of a project.
+6. Push regularly to back up committed work.
+7. Use branches to experiment with features.
+8. Avoid destructive commands unless I understand their consequences.
+9. Keep dependencies and setup instructions documented.
+10. Treat GitHub as a backup, but maintain other backups for important work.
+
+## 10. What I should learn next
+
+Recommended order:
+
+1. Git basics: status, add, commit, push, pull, and log.
+2. `.gitignore`, repositories, branches, and remotes.
+3. GitHub pull requests and merging branches.
+4. Python project structure, `uv`, and dependency management.
+5. Unit testing with `pytest`.
+6. GitHub Actions for automated tests and continuous integration.
+7. Docker and deployment once I am comfortable with the basics.
